@@ -1,6 +1,8 @@
 package in.harshaunkhehra.billingsoftware.service.impl;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     }
 
+    //when we get the new category, we reverse and convert/copy the values into the response
     private CategoryResponse convertToResponse(CategoryEntity newCategory) {
        return CategoryResponse.builder()
             .categoryId(newCategory.getCategoryId())
@@ -54,6 +57,15 @@ public class CategoryServiceImpl implements CategoryService {
             .description(request.getDescription())
             .bgColor(request.getBgColor())
             .build();
+    }
+
+    @Override
+    public List<CategoryResponse> read() {
+        return categoryRepository.findAll()
+            .stream()
+            .map(categoryEntity -> convertToResponse(categoryEntity)) //convert each category entity to response
+            .collect(Collectors.toList()); //collect the stream to a list
+        
     }
 
 }
