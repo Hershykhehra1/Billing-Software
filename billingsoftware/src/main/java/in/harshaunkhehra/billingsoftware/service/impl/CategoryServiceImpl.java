@@ -64,8 +64,15 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll()
             .stream()
             .map(categoryEntity -> convertToResponse(categoryEntity)) //convert each category entity to response
-            .collect(Collectors.toList()); //collect the stream to a list
-        
+            .collect(Collectors.toList()); //collect the stream to a list 
+    }
+
+    @Override
+    public void delete(String categoryId) {
+        CategoryEntity existingCategory = categoryRepository.findByCategoryId(categoryId)//if the category entity is present, delete it
+            .orElseThrow(() -> new RuntimeException("Category not found: " + categoryId));
+
+        categoryRepository.delete(existingCategory); //delete the existing category
     }
 
 }
