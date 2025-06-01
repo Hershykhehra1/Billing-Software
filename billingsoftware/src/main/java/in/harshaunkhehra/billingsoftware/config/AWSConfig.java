@@ -13,14 +13,15 @@ import software.amazon.awssdk.services.s3.S3Client;
 public class AWSConfig {
 
     //load our keys and region from application.properties file
-    @Value("${aws.accessKey}")
+    @Value("${aws.access.key}")
     private String accessKey;
-    @Value("${aws.secretKey}")
+    @Value("${aws.secret.key}")
     private String secretKey;
     @Value("${aws.region}")
     private String region;
 
     //this is a configuration for making the AWS S3 client availible to us so we can use the s3 client to interact with the s3 bucket
+    //creating bean for the se client here
     @Bean
     public S3Client s3Client() {
         return S3Client.builder()
