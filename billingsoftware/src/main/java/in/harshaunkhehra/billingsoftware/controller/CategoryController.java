@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,14 +23,13 @@ import lombok.RequiredArgsConstructor;
 
 
 @RestController
-@RequestMapping("/categories")
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryService categoryService;
 
     //creating category endpoint
-    @PostMapping
+    @PostMapping("/adimin/categories") //only admin can create categories
     @ResponseStatus(HttpStatus.CREATED)
     //use request part here  because we are sending a multipart file and the request body
     public CategoryResponse addCategory(@RequestPart("category") String categoryString, @RequestPart("file") MultipartFile file){
@@ -51,7 +49,7 @@ public class CategoryController {
         
     }
     
-    //reading all categories endpoint
+    //reading all categories endpoint and is accessible to all users(roles)
     @GetMapping
     public List<CategoryResponse> fetchCategories() {
         return categoryService.read();
@@ -59,7 +57,7 @@ public class CategoryController {
 
     //deleting category endpoint
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{categoryId}")
+    @DeleteMapping("/admin/categories/{categoryId}") //only admin can delete categories
     public void remove(@PathVariable String categoryId) {
         try {
             categoryService.delete(categoryId);
