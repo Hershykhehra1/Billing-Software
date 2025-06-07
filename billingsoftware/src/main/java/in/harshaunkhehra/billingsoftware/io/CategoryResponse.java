@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class CategoryResponse {
+
     private String categoryId;
     private String name;
     private String description;
@@ -15,5 +16,5 @@ public class CategoryResponse {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private String imgUrl;
-    
+
 }
