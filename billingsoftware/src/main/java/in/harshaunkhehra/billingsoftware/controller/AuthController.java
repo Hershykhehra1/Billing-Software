@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import in.harshaunkhehra.billingsoftware.io.AuthRequest;
 import in.harshaunkhehra.billingsoftware.io.AuthResponse;
+import in.harshaunkhehra.billingsoftware.service.UserService;
 import in.harshaunkhehra.billingsoftware.service.impl.AppUserDetailsService;
 import in.harshaunkhehra.billingsoftware.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -27,20 +28,18 @@ public class AuthController {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final AppUserDetailsService appUserDetailsService;
+    private final UserService userService;
     private final JwtUtil jwtUtil;
 
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest request) throws Exception {
-        // authenticate the user, if the credentials are valid, it will return a JWT
-        // token
+        // authenticate the user, if the credentials are valid, it will return a JWT token
         authenticate(request.getEmail(), request.getPassword());
-        final UserDetails userDetails = appUserDetailsService.loadUserByUsername(request.getEmail()); // get the user
-                                                                                                      // details from
-                                                                                                      // the service
+        // get the user details from the service
+        final UserDetails userDetails = appUserDetailsService.loadUserByUsername(request.getEmail());
         final String jwtToken = jwtUtil.generateToken(userDetails); // generate the JWT token
-
-        // FETCH THE ROLE FROM THE REPOSITORY
-        return new AuthResponse(request.getEmail(), "USER", jwtToken); // return the response with email, role and token
+        String role = userService.getUserRole(request.getEmail()); // get the user role from the service
+        return new AuthResponse(request.getEmail(), jwtToken, role); // return the response with email, role and token
     }
 
     private void authenticate(String email, String password) throws Exception {
