@@ -11,6 +11,7 @@ import in.harshaunkhehra.billingsoftware.entity.CategoryEntity;
 import in.harshaunkhehra.billingsoftware.io.CategoryRequest;
 import in.harshaunkhehra.billingsoftware.io.CategoryResponse;
 import in.harshaunkhehra.billingsoftware.repository.CategoryRepository;
+import in.harshaunkhehra.billingsoftware.repository.ItemRepository;
 import in.harshaunkhehra.billingsoftware.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +20,8 @@ import lombok.RequiredArgsConstructor;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-
     private final FileUploadServiceImpl fileUploadService; //service to upload files to AWS S3 bucket
+    private final ItemRepository itemRepository; //repository to interact with items
     
     // Implementation of adding a category, convert request to entity, save to repository, return response
     @Override
@@ -45,6 +46,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     //when we get the new category, we reverse and convert/copy the values into the response
     private CategoryResponse convertToResponse(CategoryEntity newCategory) {
+        Integer itemsCount = itemRepository.countByCategoryId(newCategory.getId()); //set the items count in the category entity
        return CategoryResponse.builder()
             .categoryId(newCategory.getCategoryId())
             .name(newCategory.getName())
@@ -53,6 +55,7 @@ public class CategoryServiceImpl implements CategoryService {
             .imgUrl(newCategory.getImgUrl())
             .createdAt(newCategory.getCreatedAt())
             .updatedAt(newCategory.getUpdatedAt())
+            .items(itemsCount) //set the items count in the response
             .build();
     }
 

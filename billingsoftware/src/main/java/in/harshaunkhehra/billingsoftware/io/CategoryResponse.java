@@ -16,5 +16,6 @@ public class CategoryResponse {
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private String imgUrl;
+    private Integer items;
 
 }

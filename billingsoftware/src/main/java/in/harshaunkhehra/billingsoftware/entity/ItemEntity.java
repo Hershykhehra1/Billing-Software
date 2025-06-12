@@ -34,7 +34,6 @@ public class ItemEntity {
     private Long id;
     @Column(unique = true)
     private String itemId;
-
     private String name;
     private BigDecimal price;
     private String description;
