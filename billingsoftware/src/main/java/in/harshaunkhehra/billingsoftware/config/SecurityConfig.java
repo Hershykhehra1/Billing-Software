@@ -37,7 +37,7 @@ public class SecurityConfig {
         http.cors(Customizer.withDefaults()) // enable CORS
                 .csrf(AbstractHttpConfigurer::disable) // disable CSRF protection
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/login", "/encode").permitAll()// allow all requests, accessible by anyone
-                        .requestMatchers("/category", "/items").hasAnyRole("USER", "ADMIN") // allow only users with USER or ADMIN role to access these endpoints
+                        .requestMatchers("/categories", "/items").hasAnyRole("USER", "ADMIN") // allow only users with USER or ADMIN role to access these endpoints
                         .requestMatchers("/admin/**").hasRole("ADMIN") // allow only users with ADMIN role to access admin endpoints, any url that starts with '/admin' is only accessable by the admin role
                         .anyRequest().authenticated()) // all other requests must be authenticated
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // use stateless session management

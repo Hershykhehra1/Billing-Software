@@ -29,7 +29,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     //creating category endpoint
-    @PostMapping("/adimin/categories") //only admin can create categories
+    @PostMapping("/admin/categories") //only admin can create categories
     @ResponseStatus(HttpStatus.CREATED)
     //use request part here  because we are sending a multipart file and the request body
     public CategoryResponse addCategory(@RequestPart("category") String categoryString, @RequestPart("file") MultipartFile file){
@@ -50,7 +50,7 @@ public class CategoryController {
     }
     
     //reading all categories endpoint and is accessible to all users(roles)
-    @GetMapping
+    @GetMapping("/categories")
     public List<CategoryResponse> fetchCategories() {
         return categoryService.read();
     }

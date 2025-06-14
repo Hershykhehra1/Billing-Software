@@ -1,5 +1,5 @@
 
-const UsersList = () => {
+const UsersList = ({users, setUsers}) => {
   return (
     <div>UsersList</div>
   )
