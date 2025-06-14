@@ -59,7 +59,7 @@ const CategoryList = () => {
                 {/* Category Name and Items */}
                 <div className="flex-grow-1">
                   <h5 className="mb-1 text-white">{category.name}</h5>
-                  <p className="mb-0 text-white">5 Items</p>
+                  <p className="mb-0 text-white">{category.items} Items</p>
                 </div>
                 {/* Delete */}
                 <div>
@@ -68,7 +68,6 @@ const CategoryList = () => {
                     <i className="bi bi-trash"></i>
                   </button>
                 </div>
-
               </div>
             </div>
           </div>
