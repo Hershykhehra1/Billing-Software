@@ -74,7 +74,6 @@ const CategoryList = () => {
           </div>
         ))}
       </div>
-
     </div>
   )
 }
