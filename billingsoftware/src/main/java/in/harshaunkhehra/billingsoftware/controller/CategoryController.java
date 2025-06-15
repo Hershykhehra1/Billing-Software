@@ -1,5 +1,6 @@
 package in.harshaunkhehra.billingsoftware.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,8 @@ public class CategoryController {
 
         } catch (JsonProcessingException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Exception occured while parsing the json: " + ex.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         
     }
