@@ -30,7 +30,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class OrderEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,19 +40,21 @@ public class OrderEntity {
     private Double tax;
     private Double total;
     private LocalDateTime createdAt;
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "order_id")//creates column inside orderItemEntity class
-    private List <OrderItemEntity> items = new ArrayList<>();
+    @JoinColumn(name = "order_id")
+    private List<OrderItemEntity> items = new ArrayList<>();
 
     @Embedded
     private PaymentDetails paymentDetails;
+
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
-    
     @PrePersist
     protected void onCreate() {
-        this.orderId = "ORD" + System.currentTimeMillis();
+        this.orderId = "ORD"+System.currentTimeMillis();
         this.createdAt = LocalDateTime.now();
     }
+
 }
