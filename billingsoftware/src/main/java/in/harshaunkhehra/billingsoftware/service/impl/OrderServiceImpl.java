@@ -94,7 +94,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<OrderResponse> getLatestOrders() {
-        return orderEntityRepository.findAllByOrderByCreatedAtDecs()
+        return orderEntityRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
