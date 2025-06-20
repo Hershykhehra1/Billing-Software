@@ -2,10 +2,12 @@ import { useContext } from 'react';
 import './CartSummary.css';
 import { AppContext } from '../../context/AppContext.jsx';
 import Receipt from '../Receipt/Receipt.jsx';
+import { useNavigate } from 'react-router-dom';
 
-const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerName}) => {
+const CartSummary = () => {
 
-  const {cartItems} = useContext(AppContext);
+  const { cartItems } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const totalAmount = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
@@ -32,9 +34,9 @@ const CartSummary = ({customerName, mobileNumber, setMobileNumber, setCustomerNa
 
       <div className="d-flex gap-3">
         <button className="btn btn-success flex-grow-1">Cash</button>
-        <button className="btn btn-primary flex-grow-1">Card</button>
+        <button className="btn btn-primary flex-grow-1" onClick={() => navigate('/paypalpayment')}>Card</button>
       </div>
-      
+
       <div className="d-flex gap-3 mt-3">
         <button className="btn btn-warning flex-grow-1">Place Order</button>
       </div>
